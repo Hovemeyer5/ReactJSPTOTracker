@@ -5,7 +5,7 @@ import React from 'react';
 class Header extends React.Component {
   render() {
     return (
-      <nav className="navbar navbar-light">
+      <nav className="navbar navbar-light bg-light">
         <div className="container">
 
           <a className="navbar-brand">
