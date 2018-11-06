@@ -12,3 +12,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+.app-header{
+  text-align: center;
+}
+label{
+  font-weight: bold;
+}
