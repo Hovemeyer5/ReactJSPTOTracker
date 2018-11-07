@@ -1,13 +1,7 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import { connect} from 'react-redux';
 import { sortPtoEntries, calcEntryBalances } from '../store/actions';
-
-const mapDispatchToProps = dispatch => {
-    return {
-        sortPtoEntries: () => dispatch(sortPtoEntries()),
-        calcEntryBalances: () => dispatch(calcEntryBalances())
-    };
-};
+import store from '../store/store';
 
 const mapStateToProps = state => {
     return { 
@@ -18,6 +12,11 @@ const mapStateToProps = state => {
 };
 
 class PtoGeneralInfo extends Component {
+   constructor(){
+        super();
+        store.dispatch(sortPtoEntries());
+        store.dispatch(calcEntryBalances());
+   }
    getEarnedBalance(entries){
     let today = new Date().getTime();
     let lastEntryBeforeToday = entries[0];
@@ -33,8 +32,6 @@ class PtoGeneralInfo extends Component {
     return Math.round(lastEntry.projectedBalance*100)/100;
    }
    render() {
-        this.props.sortPtoEntries();
-        this.props.calcEntryBalances();
         const earnedBalance = this.getEarnedBalance(this.props.entries);
         const projectedBalance = this.getProjectedBalance(this.props.entries);
 
@@ -74,4 +71,4 @@ class PtoGeneralInfo extends Component {
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps) (PtoGeneralInfo);
+export default connect(mapStateToProps) (PtoGeneralInfo);

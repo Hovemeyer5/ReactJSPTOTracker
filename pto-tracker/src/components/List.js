@@ -1,13 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { sortPtoEntries, calcEntryBalances } from '../store/actions';
-
-const mapDispatchToProps = dispatch => {
-    return {
-        sortPtoEntries: () => dispatch(sortPtoEntries()),
-        calcEntryBalances: () => dispatch(calcEntryBalances())
-    };
-};
 
 const mapStateToProps = state => {
     return { 
@@ -29,8 +21,6 @@ class List extends Component {
         return classes;
     }
     render() {
-        this.props.sortPtoEntries();
-        this.props.calcEntryBalances();
         return (
             <div className="row">
                 <div className="col-md-12">
@@ -88,4 +78,4 @@ class List extends Component {
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps) (List);
+export default connect(mapStateToProps) (List);

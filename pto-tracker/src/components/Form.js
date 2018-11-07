@@ -4,11 +4,13 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
 import uuidv1 from "uuid";
-import { addPtoEntry } from "../store/actions";
+import { addPtoEntry, sortPtoEntries, calcEntryBalances } from "../store/actions";
 
 const mapDispatchToProps = dispatch => {
   return {
-    addPtoEntry: entry => dispatch(addPtoEntry(entry))
+    addPtoEntry: entry => dispatch(addPtoEntry(entry)),
+    sortPtoEntries: () => dispatch(sortPtoEntries()),
+    calcEntryBalances: () => dispatch(calcEntryBalances())
   };
 };
 
@@ -17,16 +19,17 @@ const mapStateToProps = state => {
 };
 
 class ConnectedForm extends Component {
+  initialState = {
+    startDate: moment(),
+    endDate: moment(),
+    description: "",
+    hoursRequested: 8,
+    errors: []
+  };
   constructor() {
     super();
 
-    this.state = {
-      startDate: moment(),
-      endDate: moment(),
-      description: "",
-      hoursRequested: 8,
-      errors: []
-    };
+    this.state = this.initialState;
 
     this.handleChange = this.handleChange.bind(this);
     this.handleStartDatePickerChange = this.handleStartDatePickerChange.bind(this);
@@ -103,14 +106,9 @@ class ConnectedForm extends Component {
     const used = hoursRequested;
     const id = uuidv1();
     this.props.addPtoEntry({ id, startDate, endDate, description, used, credit });
-    this.setState(
-      { 
-        startDate: moment(),
-        endDate: moment(),
-        description: "",
-        hoursRequested: 0.00,
-        errors: []
-      });
+    this.props.sortPtoEntries();
+    this.props.calcEntryBalances();
+    this.setState(this.initialState);
   }
 
   render() {
