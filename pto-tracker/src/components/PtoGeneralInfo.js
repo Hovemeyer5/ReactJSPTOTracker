@@ -12,7 +12,27 @@ const mapStateToProps = state => {
 class PtoGeneralInfo extends Component {
 
    render() {
-       
+        let earnedBalance = 0;
+        let projectedBalance = this.props.rollover + this.props.accrualRate * 12;
+        this.props.entries.sort( (a,b) =>{
+            let aStartDate = new Date(a.startDate).getTime();
+            let bStartDate = new Date(b.startDate).getTime();
+            let aEndDate = new Date(a.endDate).getTime();
+            let bEndDate = new Date(b.endDate).getTime();
+
+            if(aStartDate === bStartDate)
+                return bEndDate - aEndDate;
+            
+            return aStartDate - bStartDate ;
+        });
+
+        this.props.entries.forEach(entry =>{
+            earnedBalance = entry.credit - entry.used + earnedBalance;
+            projectedBalance = projectedBalance - entry.used;
+            entry.earnedBalance = earnedBalance;
+            entry.projectedBalance = projectedBalance;
+        });
+    
        const lastEntry = this.props.entries[this.props.entries.length-1];
        let lastEntryBeforeToday = this.props.entries[0];
        let today = new Date().getTime();
@@ -21,8 +41,9 @@ class PtoGeneralInfo extends Component {
                 lastEntryBeforeToday = entry;
             }
        });
-       const earnedBalance = Math.round(lastEntryBeforeToday.earnedBalance *100)/100;
-       const projectedBalance = Math.round(lastEntry.projectedBalance*100)/100;
+       earnedBalance = Math.round(earnedBalance*100)/100;
+       projectedBalance = Math.round(projectedBalance*100)/100;
+
        return (
            <div>
                 <div className="row">
