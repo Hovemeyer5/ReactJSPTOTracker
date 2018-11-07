@@ -17,9 +17,18 @@ const mapStateToProps = state => {
      };
 };
 class List extends Component {
-
-    render() {
+    getRowClasses(entry){
         const today = new Date().getTime();
+        let classes = '';
+        if(entry.used > 0){
+            classes += ' pto-entries-used-pto-row';
+        }
+        if(new Date(entry.endDate).getTime() > today){
+            classes += ' pto-entries-future-pto-row';
+        }
+        return classes;
+    }
+    render() {
         this.props.sortPtoEntries();
         this.props.calcEntryBalances();
         return (
@@ -49,8 +58,7 @@ class List extends Component {
                         </div>
                     </div>
                     {this.props.entries.map(entry => (
-                        <div className={"row pto-entries-row " + (entry.used > 0 ? ' pto-entries-used-pto-row' : '') 
-                        + (new Date(entry.endDate).getTime() > today ? ' pto-entries-future-pto-row' : '')} key={entry.id}>
+                        <div className={"row pto-entries-row " + this.getRowClasses(entry)} key={entry.id}>
                             <div className="col-md-2">
                                 {entry.startDate}
                             </div>
