@@ -2,11 +2,36 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 const mapStateToProps = state => {
-    return { entries: state.entries };
+    return { 
+        entries: state.entries,
+        rollover: state.rollover,
+        accrualRate: state.accrualRate
+     };
 };
 
-const ConnectedList = ({ entries }) => {
+const ConnectedList = ({ entries, rollover, accrualRate }) => {
     const today = new Date().getTime();
+    let earnedBalance = 0;
+    let projectedBalance = rollover + accrualRate * 12;
+    entries.sort( (a,b) =>{
+        let aStartDate = new Date(a.startDate).getTime();
+        let bStartDate = new Date(b.startDate).getTime();
+        let aEndDate = new Date(a.endDate).getTime();
+        let bEndDate = new Date(b.endDate).getTime();
+
+        if(aStartDate === bStartDate)
+            return bEndDate - aEndDate;
+        
+        return aStartDate - bStartDate ;
+    });
+
+    entries.forEach(entry =>{
+        earnedBalance = entry.credit - entry.used + earnedBalance;
+        projectedBalance = projectedBalance - entry.used;
+        entry.earnedBalance = earnedBalance;
+        entry.projectedBalance = projectedBalance;
+    });
+
     return (
         <div className="row">
             <div className="col-md-12">

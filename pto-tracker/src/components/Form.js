@@ -48,16 +48,7 @@ class ConnectedForm extends Component {
     const credit = 0;
     const used = hoursRequested;
     const id = uuidv1();
-    let lastEntry = {
-      earnedBalance: 0,
-      projectedBalance: 0
-    }
-    if(this.props.entries.length > 0){
-      lastEntry = this.props.entries[this.props.entries.length -1];
-    }
-    let earnedBalance = lastEntry.earnedBalance - used;
-    let projectedBalance = lastEntry.projectedBalance - used;
-    this.props.addPtoEntry({ id, startDate, endDate, description, used, credit, earnedBalance, projectedBalance });
+    this.props.addPtoEntry({ id, startDate, endDate, description, used, credit });
     this.setState(
       { 
         startDate: "",

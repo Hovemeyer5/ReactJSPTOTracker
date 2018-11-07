@@ -15,9 +15,7 @@ if(defaultState.rollover > 0){
       endDate: new Date('01/01/19').toLocaleDateString(),
       description: "2019 Initial Balance",
       used: 0.00,
-      credit: defaultState.rollover,
-      earnedBalance: defaultState.rollover,
-      projectedBalance:(defaultState.accrualRate * 12) + defaultState.rollover
+      credit: defaultState.rollover
     }
     defaultState.entries.push(initialPTOEntry);
 }
@@ -29,9 +27,7 @@ for(let i = 1; i <= 12; i++){
         endDate: new Date(month + "/01/19").toLocaleDateString(),
         description: month + "/01/19 Acrrual",
         used: 0.00,
-        credit: defaultState.accrualRate,
-        earnedBalance: defaultState.entries[defaultState.entries.length-1].earnedBalance + defaultState.accrualRate,
-        projectedBalance: defaultState.entries[defaultState.entries.length-1].projectedBalance
+        credit: defaultState.accrualRate
       }
       defaultState.entries.push(acrrualEntry);
 }
