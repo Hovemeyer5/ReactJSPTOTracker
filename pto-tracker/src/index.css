@@ -14,8 +14,36 @@ code {
 }
 .app-header{
   text-align: center;
+  border-bottom: 1px solid grey;
 }
 label{
   font-weight: bold;
   margin-right: 10px;
+}
+.submit-pto-entry{
+  margin-top: 32px;
+  padding: 0px;
+}
+.pto-entries-header{
+  border-bottom: 1px solid black;
+  font-weight: bold;
+}
+.pto-entries-row{
+  border-bottom: 1px solid #444;
+}
+.pto-entries-row:nth-child(even){
+  background-color: #eee;
+}
+.pto-entries-used-pto-row{
+  font-weight: bold;
+  background-color: #9fb7e6
+}
+.pto-entries-future-pto-row{
+  font-style: italic;
+}
+.middle{
+  text-align: center;
+}
+.last{
+  text-align: right;
 }

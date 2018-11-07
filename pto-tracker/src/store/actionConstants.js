@@ -1,5 +1,5 @@
 
 const actionConstants = {
-    ADD_ARTICLE: 'ADD_ARTICLE'
+    ADD_PTO_ENTRY: 'ADD_PTO_ENTRY'
 };
 export default actionConstants; 

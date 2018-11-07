@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
-import List from './List';
-import Form from './Form';
+
+
 import Header from './Header';
 import PtoGeneralInfo from './PtoGeneralInfo';
+import PtoEntry from './PtoEntry';
+import PtoEntries from './PtoEntries';
+
 
 class App extends Component {
   
@@ -13,19 +16,9 @@ class App extends Component {
 
         <PtoGeneralInfo />
 
-        <div className="row mt-2">
-          <div className="col-md-12 ">
-            <h2>Add a PTO Entry</h2>
-            <Form />
-          </div>
-        </div>
+        <PtoEntry />
 
-        <div className="row mt-2">
-          <div className="col-md-12">
-            <h2>PTO Entries</h2>
-            
-          </div>
-        </div>
+        <PtoEntries />
       </div>
     );
   }
