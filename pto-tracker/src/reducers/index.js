@@ -1,11 +1,11 @@
 import defaultState from './defaultState';
-import actionConstants from './actionConstants';
+import { actions } from './actions';
 
 const reducer = function (state = defaultState, action) {
     switch(action.type) {
-        case actionConstants.ADD_PTO_ENTRY:
+        case actions.ADD_PTO_ENTRY:
          return { ...state, entries: [...state.entries, action.payload] };
-        case actionConstants.SORT_PTO_ENTRIES:
+        case actions.SORT_PTO_ENTRIES:
             state.entries.sort( (a,b) =>{
                 let aStartDate = new Date(a.startDate).getTime();
                 let bStartDate = new Date(b.startDate).getTime();
@@ -18,7 +18,7 @@ const reducer = function (state = defaultState, action) {
                 return aStartDate - bStartDate ;
             });
             return state;
-        case actionConstants.CALC_ENTRY_BALANCES:
+        case actions.CALC_ENTRY_BALANCES:
             let earnedBalance = 0;
             let monthsInYear = 12;
             let projectedBalance = state.rollover + state.accrualRate * monthsInYear;
