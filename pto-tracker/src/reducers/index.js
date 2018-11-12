@@ -29,6 +29,10 @@ const reducer = function (state = defaultState, action) {
                 entry.projectedBalance = projectedBalance;
             });
             return state;
+        case actions.REQUEST_PTO_ENTRIES:
+            return { ...state, loading: true};
+        case actions.RECEIVED_PTO_ENTRIES:
+            return { ...state, entries: action.payload, loading: false}
         default:
          return state;
     }

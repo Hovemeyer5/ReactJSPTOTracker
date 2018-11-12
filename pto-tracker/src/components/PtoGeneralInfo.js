@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect} from 'react-redux';
-import { sortPtoEntries, calcEntryBalances } from '../reducers/actions';
+import { sortPtoEntries, calcEntryBalances, fetchPtoEntries } from '../reducers/actions';
 import store from '../store/store';
 
 const mapStateToProps = state => {
@@ -16,6 +16,8 @@ class PtoGeneralInfo extends Component {
         super();
         store.dispatch(sortPtoEntries());
         store.dispatch(calcEntryBalances());
+        debugger;
+        store.dispatch(fetchPtoEntries());
    }
    getEarnedBalance(entries){
     let today = new Date().getTime();
