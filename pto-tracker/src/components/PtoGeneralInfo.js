@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect} from 'react-redux';
-import { sortPtoEntries, calcEntryBalances } from '../store/actions';
+import { sortPtoEntries, calcEntryBalances } from '../reducers/actions';
 import store from '../store/store';
 
 const mapStateToProps = state => {
