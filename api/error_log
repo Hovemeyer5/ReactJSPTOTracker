@@ -1,2 +1,0 @@
-[12-Nov-2018 12:43:26] PHP Parse error:  syntax error, unexpected T_VARIABLE, expecting T_FUNCTION in /home3/yahstcom/public_html/wt/ptotracker/api/initial.php on line 3
-[12-Nov-2018 12:44:24] PHP Parse error:  syntax error, unexpected T_ECHO in /home3/yahstcom/public_html/wt/ptotracker/api/initial.php on line 24
