@@ -6,7 +6,8 @@ const reducer = function (state = defaultState, action) {
         case actions.ADD_PTO_ENTRY:
          return { ...state, entries: [...state.entries, action.payload] };
         case actions.SORT_PTO_ENTRIES:
-            state.entries.sort( (a,b) =>{
+            let sortedEntries = state.entries.slice(0);
+            sortedEntries.sort( (a,b) =>{
                 let aStartDate = new Date(a.startDate).getTime();
                 let bStartDate = new Date(b.startDate).getTime();
                 let aEndDate = new Date(a.endDate).getTime();
@@ -17,18 +18,19 @@ const reducer = function (state = defaultState, action) {
                 
                 return aStartDate - bStartDate ;
             });
-            return state;
+            return { ...state, entries: sortedEntries};
         case actions.CALC_ENTRY_BALANCES:
+            let balanceCalculatedEntries = state.entries.slice(0);
             let earnedBalance = 0;
             let monthsInYear = 12;
             let projectedBalance = state.rollover + state.accrualRate * monthsInYear;
-            state.entries.forEach(entry =>{
+            balanceCalculatedEntries.forEach(entry =>{
                 earnedBalance = entry.credit - entry.used + earnedBalance;
                 projectedBalance = projectedBalance - entry.used;
                 entry.earnedBalance = earnedBalance;
                 entry.projectedBalance = projectedBalance;
             });
-            return state;
+            return { ...state, entries: balanceCalculatedEntries};
         case actions.REQUEST_PTO_ENTRIES:
             return { ...state, loading: true};
         case actions.RECEIVED_PTO_ENTRIES:
