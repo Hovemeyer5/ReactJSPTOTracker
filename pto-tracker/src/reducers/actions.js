@@ -1,3 +1,5 @@
+import PtoEntry from '../models/PtoEntry';
+
 export const actions = {
     ADD_PTO_ENTRY: 'ADD_PTO_ENTRY',
     SORT_PTO_ENTRIES: 'SORT_PTO_ENTRIES',
@@ -5,6 +7,7 @@ export const actions = {
     REQUEST_PTO_ENTRIES: 'REQUEST_PTO_ENTRIES',
     RECEIVED_PTO_ENTRIES: 'RECEIVED_PTO_ENTIRES'
 };
+
 
 export const addPtoEntry = entry => ({ type: actions.ADD_PTO_ENTRY, payload: entry });
 export const sortPtoEntries = () => ( { type: actions.SORT_PTO_ENTRIES});
@@ -22,7 +25,10 @@ export function fetchPtoEntries() {
          error => console.log('An error occurred.', error),
         )
       .then((payload) => {
-         dispatch(receivedPtoEntries(payload));
+          payload = payload.map(ptoEntry => new PtoEntry(ptoEntry));
+          dispatch(receivedPtoEntries(payload));
+          dispatch(sortPtoEntries());
+          dispatch(calcEntryBalances());
       },
      );
     };
