@@ -3,12 +3,20 @@ import React, { Component } from 'react';
 
 import Header from './Header';
 import PtoGeneralInfo from './PtoGeneralInfo';
-import PtoEntry from './PtoEntry';
+import PtoFormEntrySection from './PtoFormEntrySection';
 import PtoEntries from './PtoEntries';
+
+import store from '../store/store';
+import {fetchPtoEntries } from '../reducers/actions';
 
 
 class App extends Component {
-  
+
+  constructor(){
+    super();
+    store.dispatch(fetchPtoEntries());
+  } 
+
   render() {
     return (
       <div className="container">
@@ -16,7 +24,7 @@ class App extends Component {
 
         <PtoGeneralInfo />
 
-        <PtoEntry />
+        <PtoFormEntrySection />
 
         <PtoEntries />
       </div>

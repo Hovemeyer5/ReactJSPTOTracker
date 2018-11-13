@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { connect} from 'react-redux';
-import { sortPtoEntries, calcEntryBalances, fetchPtoEntries } from '../reducers/actions';
-import store from '../store/store';
 
 const mapStateToProps = state => {
     return { 
@@ -12,14 +10,11 @@ const mapStateToProps = state => {
 };
 
 class PtoGeneralInfo extends Component {
-   constructor(){
-        super();
-        store.dispatch(sortPtoEntries());
-        store.dispatch(calcEntryBalances());
-        debugger;
-        store.dispatch(fetchPtoEntries());
-   }
+   
    getEarnedBalance(entries){
+    if(entries.length === 0){
+        return;
+    }
     let today = new Date().getTime();
     let lastEntryBeforeToday = entries[0];
     entries.forEach(entry =>{
@@ -30,6 +25,9 @@ class PtoGeneralInfo extends Component {
     return Math.round(lastEntryBeforeToday.earnedBalance*100)/100;
    }
    getProjectedBalance(entries){
+    if(entries.length === 0){
+        return;
+    }  
     const lastEntry = entries[this.props.entries.length-1];
     return Math.round(lastEntry.projectedBalance*100)/100;
    }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Form from './Form';
 
-class PtoEntry extends Component {
+class PtoFormEntrySection extends Component {
 
     render(){
         return (
@@ -17,4 +17,4 @@ class PtoEntry extends Component {
     }
 }
 
-export default PtoEntry;
+export default PtoFormEntrySection;
