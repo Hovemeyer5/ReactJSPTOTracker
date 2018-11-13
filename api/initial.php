@@ -17,8 +17,8 @@ class ptoEntry {
     }
 }
 $initial = array(
-    new ptoEntry(1, "01/01/19", "01/01/19", "Initial Balance", "0.00", "100"),
-    new ptoEntry(2, "02/01/19", "02/01/19", "Credit for February", "0.00", "15"),
+    new ptoEntry(1, "01/01/19", "01/01/19", "Initial Balance", 0.00, 100),
+    new ptoEntry(2, "02/01/19", "02/01/19", "Credit for February", 0.00, 15),
 );
 
 echo json_encode($initial);
