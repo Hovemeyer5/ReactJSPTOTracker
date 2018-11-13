@@ -3,9 +3,7 @@ import { connect } from 'react-redux';
 
 const mapStateToProps = state => {
     return { 
-        entries: state.entries,
-        rollover: state.rollover,
-        accrualRate: state.accrualRate
+        entries: state.entries
      };
 };
 class List extends Component {
@@ -19,6 +17,9 @@ class List extends Component {
             classes += ' pto-entries-future-pto-row';
         }
         return classes;
+    }
+    formatDecimal(value){
+        return value ? Math.round(value*100)/100 : 0.00;
     }
     render() {
         return (
@@ -59,16 +60,16 @@ class List extends Component {
                                 {entry.description}
                             </div>
                             <div className="col-md-1">
-                                {Math.round(entry.used*100)/100}
+                                {this.formatDecimal(entry.used)}
                             </div>
                             <div className="col-md-1">
-                                {Math.round(entry.credit*100)/100}
+                                {this.formatDecimal(entry.credit)}
                             </div>
                             <div className="col-md-2">
-                                {Math.round(entry.earnedBalance*100)/100}
+                                {this.formatDecimal(entry.earnedBalance)}
                             </div>
                             <div className="col-md-2">
-                                {Math.round(entry.projectedBalance*100)/100}
+                                {this.formatDecimal(entry.projectedBalance)}
                             </div>
                         </div>
                     ))}
