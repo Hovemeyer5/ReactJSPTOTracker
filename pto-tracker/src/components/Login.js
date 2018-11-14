@@ -11,7 +11,10 @@ const mapDispatchToProps = dispatch => {
 };
 
 const mapStateToProps = state => {
-  return { user: state.user };
+  return { 
+    user: state.user,
+    loginFailed: state.loginFailed
+   };
 };
 
 class ConnectedLogin extends Component {
@@ -26,6 +29,11 @@ class ConnectedLogin extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   } 
+  loginFailed(){
+    if(this.props.loginFailed){
+      return <p className="red">Incorrect username/password</p>;
+    }
+  }
   handleChange(event){
     this.setState({ [event.target.id]: event.target.value });
   }
@@ -73,14 +81,15 @@ class ConnectedLogin extends Component {
                 required
                 />
             </div>
-            <button type="submit" className="submit-pto-entry btn btn-success btn-lg form-control">
+            <button type="submit" className="login-submit btn btn-success btn-lg">
                 Login
             </button>
         </form>
-        <div className={'alert alert-danger' + (this.state.errors.length > 0 ? '' : 'hide')}>
+        <div className={'login-errors alert alert-danger ' + (this.props.loginFailed || this.state.errors.length > 0 ? '' : 'hide')}>
           {this.state.errors.map(error => (
             <p key={error.id} className="red">{error.message}</p>
           ))}
+          {this.loginFailed()}
         </div>
       </div>
     );

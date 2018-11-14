@@ -43,10 +43,13 @@ const reducer = function (state = defaultState, action) {
         case actions.RECEIVED_PTO_ENTRIES:
             return { ...state, entries: action.payload, loading: false}
         case actions.SET_USER:
-            return { ...state, user: action.user, loading: false};
+            window.localStorage.setItem('u', JSON.stringify(action.user.toJson()));
+            return { ...state, user: action.user, loading: false, loginFailed: false};
         case actions.LOGOUT:
             window.localStorage.removeItem('u');
-            return { ...state, user: null};
+            return { ...state, user: null, loginFailed: false};
+        case actions.LOGIN_FAILED:
+            return { ...state, loginFailed: true };
         default:
          return state;
     }
