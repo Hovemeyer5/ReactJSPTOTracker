@@ -2,12 +2,11 @@ import React, { Component } from 'react';
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
-import User from '../models/User';
-import { setUser } from '../reducers/actions';
+import { login } from '../reducers/actions';
 
 const mapDispatchToProps = dispatch => {
   return {
-    setUser: user => dispatch(setUser(user))
+    login: (username, password) => dispatch(login(username, password))
   };
 };
 
@@ -37,29 +36,7 @@ class ConnectedLogin extends Component {
       return;
     }
     */
-    fetch('http://yahst.com/wt/ptotracker/api/login.php', {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          username: this.state.username,
-          password: this.state.password
-        })
-      }).then(response =>{
-          if(response.status === 200){
-            return response.json();
-          }
-          return {};
-      }).then(user => {
-        if(user.username){
-          const validUser = new User(user);
-          this.props.setUser(validUser);
-          const userAsString = JSON.stringify(validUser.toJson());
-          window.localStorage.setItem('u', userAsString);
-        }
-      });
+    this.props.login(this.state.username, this.state.password);
   }
 
   render() {

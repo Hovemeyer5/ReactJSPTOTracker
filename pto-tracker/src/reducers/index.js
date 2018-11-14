@@ -38,12 +38,12 @@ const reducer = function (state = defaultState, action) {
                 entry.projectedBalance = projectedBalance;
             });
             return { ...state, entries: balanceCalculatedEntries};
-        case actions.REQUEST_PTO_ENTRIES:
+        case actions.API_REQUEST:
             return { ...state, loading: true};
         case actions.RECEIVED_PTO_ENTRIES:
             return { ...state, entries: action.payload, loading: false}
         case actions.SET_USER:
-            return { ...state, user: action.user};
+            return { ...state, user: action.user, loading: false};
         case actions.LOGOUT:
             window.localStorage.removeItem('u');
             return { ...state, user: null};
