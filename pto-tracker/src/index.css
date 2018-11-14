@@ -47,3 +47,8 @@ label{
 .last{
   text-align: right;
 }
+.login-form{
+  width: 50%;
+  margin: auto;
+  margin-top: 25px;
+}

@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 import Header from './Header';
-import PtoGeneralInfo from './PtoGeneralInfo';
-import PtoFormEntrySection from './PtoFormEntrySection';
-import PtoEntries from './PtoEntries';
+import Login from './Login';
+import EmployeeView from './EmployeeView';
 
 import store from '../store/store';
 import {fetchPtoEntries } from '../reducers/actions';
@@ -19,15 +18,15 @@ class App extends Component {
 
   render() {
     return (
-      <div className="container">
-        <Header />
+      <Router>
+        <div className="container">
+          <Header />
 
-        <PtoGeneralInfo />
-
-        <PtoFormEntrySection />
-
-        <PtoEntries />
-      </div>
+          <Route exact path="/" component={Login} />
+          <Route path="/login" component={Login} />
+          <Route path="/employee" component={EmployeeView} />
+        </div>
+      </Router>
     );
   }
 }
