@@ -1,16 +1,27 @@
 import React, { Component } from 'react';
 import { Redirect } from "react-router-dom";
+import { connect } from "react-redux";
 
+import User from '../models/User';
+import { setUser } from '../reducers/actions';
 
-class Login extends Component {
+const mapDispatchToProps = dispatch => {
+  return {
+    setUser: user => dispatch(setUser(user))
+  };
+};
+
+const mapStateToProps = state => {
+  return { user: state.user };
+};
+
+class ConnectedLogin extends Component {
 
   constructor(){
     super();
     this.state = {
         username: "",
         password: "",
-        toEmployeeView: false,
-        toAdminView: false,
         errors: []
     };
     this.handleChange = this.handleChange.bind(this);
@@ -41,19 +52,22 @@ class Login extends Component {
             return response.json();
           }
           return {};
-      }).then(user =>{
+      }).then(user => {
         if(user.username){
-          this.setState({toEmployeeView: true})
+          const validUser = new User(user);
+          this.props.setUser(validUser);
+          const userAsString = JSON.stringify(validUser.toJson());
+          window.localStorage.setItem('u', userAsString);
         }
-        console.log(user);
       });
   }
 
   render() {
-    if (this.state.toEmployeeView === true) {
+  
+    if (this.props.user && this.props.user.is_admin === false) {
       return <Redirect to='/employee' />
     }
-    if (this.state.toAdminView === true) {
+    if (this.props.user && this.props.user.is_admin === true) {
       return <Redirect to='/admin' />
     }
 
@@ -96,4 +110,5 @@ class Login extends Component {
   }
 }
 
+const Login = connect(mapStateToProps, mapDispatchToProps)(ConnectedLogin);
 export default Login;

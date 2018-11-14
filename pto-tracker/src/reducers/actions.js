@@ -5,7 +5,9 @@ export const actions = {
     SORT_PTO_ENTRIES: 'SORT_PTO_ENTRIES',
     CALC_ENTRY_BALANCES: 'CALC_ENTRY_BALANCES',
     REQUEST_PTO_ENTRIES: 'REQUEST_PTO_ENTRIES',
-    RECEIVED_PTO_ENTRIES: 'RECEIVED_PTO_ENTIRES'
+    RECEIVED_PTO_ENTRIES: 'RECEIVED_PTO_ENTIRES',
+    SET_USER: 'SET_USER',
+    LOGOUT: 'LOGOUT'
 };
 
 
@@ -15,6 +17,9 @@ export const calcEntryBalances = () => ({ type: actions.CALC_ENTRY_BALANCES});
 
 export const reqestPtoEntries = () => ({ type: actions.REQUEST_PTO_ENTRIES});
 export const receivedPtoEntries = (payload) => ({ type: actions.RECEIVED_PTO_ENTRIES, payload: payload});
+
+export const setUser = (user) => ({type: actions.SET_USER, user});
+export const logout = () => ({type: actions.LOGOUT});
 
 export function fetchPtoEntries() {
     return function (dispatch) {

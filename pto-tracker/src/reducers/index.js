@@ -1,6 +1,13 @@
 import defaultState from './defaultState';
 import { actions } from './actions';
 
+import User from '../models/User';
+let user = window.localStorage.getItem('u');
+if(user){
+    const validUser = new User(JSON.parse(user));
+    defaultState.user = validUser;
+}
+
 const reducer = function (state = defaultState, action) {
     switch(action.type) {
         case actions.ADD_PTO_ENTRY:
@@ -35,6 +42,11 @@ const reducer = function (state = defaultState, action) {
             return { ...state, loading: true};
         case actions.RECEIVED_PTO_ENTRIES:
             return { ...state, entries: action.payload, loading: false}
+        case actions.SET_USER:
+            return { ...state, user: action.user};
+        case actions.LOGOUT:
+            window.localStorage.removeItem('u');
+            return { ...state, user: null};
         default:
          return state;
     }
