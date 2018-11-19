@@ -4,7 +4,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
 import uuidv1 from "uuid";
-import { addPtoEntry, sortPtoEntries, calcEntryBalances } from "../reducers/actions";
+import { addPtoEntry, sortPtoEntries, calcEntryBalances } from "../actions/ptoEntry";
 
 const mapDispatchToProps = dispatch => {
   return {

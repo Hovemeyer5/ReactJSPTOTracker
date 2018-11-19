@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Redirect, Link } from "react-router-dom";
 import { connect } from "react-redux";
 
-import { login } from '../../reducers/actions';
+import { login } from '../../actions/auth';
 
 const mapDispatchToProps = dispatch => {
   return {

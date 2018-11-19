@@ -1,5 +1,5 @@
 import User from '../models/User';
-import { actions } from './actions';
+import { actions as authactions } from '../actions/auth';
 
 const defaultState = {
     user: null,
@@ -14,13 +14,13 @@ if(user){
 
 const authReducer = function (state = defaultState, action) {
     switch(action.type) {
-        case actions.SET_USER:
+        case authactions.SET_USER:
             window.localStorage.setItem('u', JSON.stringify(action.user.toJson()));
             return { ...state, user: action.user, loading: false, loginFailed: false};
-        case actions.LOGOUT:
+        case authactions.LOGOUT:
             window.localStorage.removeItem('u');
             return { ...state, user: null, loginFailed: false};
-        case actions.LOGIN_FAILED:
+        case authactions.LOGIN_FAILED:
             return { ...state, loginFailed: true };
         default:
          return state;

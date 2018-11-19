@@ -8,7 +8,7 @@ import PtoFormEntrySection from './PtoFormEntrySection';
 import PtoEntries from './PtoEntries';
 
 import store from '../store/store';
-import {fetchPtoEntries } from '../reducers/actions';
+import {fetchPtoEntries } from '../actions/ptoEntry';
 
 
 const mapStateToProps = state => {

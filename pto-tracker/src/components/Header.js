@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { logout } from '../reducers/actions';
+import { logout } from '../actions/auth';
 
 const mapDispatchToProps = dispatch => {
     return {
