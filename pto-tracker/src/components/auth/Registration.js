@@ -23,32 +23,73 @@ class Registration extends Component {
     super();
     this.state = {
         registrant: new Registrant(),
+        passwordCheck: "",
         errors: []
     };
     this.handleChange = this.handleChange.bind(this);
     this.handlePasswordCheckChange = this.handlePasswordCheckChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   } 
-  registrationFailed(){
-    if(this.props.registrationFailed){
-      return <p className="red">{this.props.registrationFailed}</p>;
-    }
-  }
+  
   handlePasswordCheckChange(event){
+    if(this.state.errors.length > 0){
+      let state = this.state;
+      state[event.target.id] = event.target.value;
+      this.validate(state);
+    }
+  
     this.setState({[event.target.id]: event.target.value });
   }
   handleChange(event){
+    if(this.state.errors.length > 0){
+      let state = this.state;
+      state.registrant[event.target.id] = event.target.value;
+      this.validate(this.state);
+    }
     let registrant = this.state.registrant;
     registrant[event.target.id] = event.target.value
     this.setState({ registrant });
   }
+  validateEmail(email) 
+  {
+    return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
+  }
+  validatePassword(pw){
+    // at least one number, one lowercase and one uppercase letter
+    // at least eight characters
+    var re = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/;
+    return re.test(pw);
+  }
+  validate(state){
+      let errors = [];
+      if(!this.validateEmail(state.registrant.email)){
+        errors.push({
+          id: 1,
+          message: "Invalid email format: Must be of format example@example.com"
+        });
+      }
+      if(state.registrant.password !== state.passwordCheck){
+        errors.push({
+          id: 2,
+          message: "Passwords must match."
+        });
+      }
+      if(!this.validatePassword(state.registrant.password)){
+        errors.push({
+          id: 3,
+          message: "Password must be contain one number, one lowercase letter, one upper case letter, and be a minimum of 8 characters long."
+        });
+      }
+    this.setState({errors});
+    return errors.length === 0;
+  }
   handleSubmit(event) {
     event.preventDefault();
-    /*
-    if(!this.validateEntry()){
+    
+    if(!this.validate(this.state)){
       return;
     }
-    */
+    
     //this.props.registration(this.state.registrant);
   }
   registeredSuccessful(){
@@ -59,7 +100,11 @@ class Registration extends Component {
           </div>
       );
   } 
-
+  registrationFailed(){
+    if(this.props.registrationFailed){
+      return <p className="red">{this.props.registrationFailed}</p>;
+    }
+  }
   render() {
   
     if (this.props.registered === true) {
