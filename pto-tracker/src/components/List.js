@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 const mapStateToProps = state => {
     return { 
-        entries: state.entries
+        entries: state.pto.entries
      };
 };
 class List extends Component {

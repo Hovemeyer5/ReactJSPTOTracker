@@ -131,7 +131,6 @@ class Registration extends Component {
                 id="is_admin"
                 value={this.state.registrant.is_admin}
                 onChange={this.handleChange}
-                required
                 />
             </div>
             <button type="submit" className="login-submit btn btn-success btn-lg">

@@ -3,9 +3,9 @@ import { connect} from 'react-redux';
 
 const mapStateToProps = state => {
     return { 
-        rollover: state.rollover,
-        accrualRate: state.accrualRate,
-        entries: state.entries
+        rollover: state.pto.rollover,
+        accrualRate: state.pto.accrualRate,
+        entries: state.pto.entries
     };
 };
 
