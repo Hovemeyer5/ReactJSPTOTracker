@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import { connect } from "react-redux";
 
 import { login } from '../../reducers/actions';
@@ -90,6 +90,9 @@ class ConnectedLogin extends Component {
             <p key={error.id} className="red">{error.message}</p>
           ))}
           {this.loginFailed()}
+        </div>
+        <div>
+          <span><Link to="/register">New User?</Link></span>
         </div>
       </div>
     );

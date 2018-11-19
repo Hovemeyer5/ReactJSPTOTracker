@@ -3,7 +3,9 @@ import { BrowserRouter as Router, Route} from "react-router-dom";
 
 import Header from './Header';
 import Login from './user_auth/Login';
+import Registration from './user_auth/Registration';
 import EmployeeView from './EmployeeView';
+
 
 class App extends Component {
  
@@ -16,6 +18,7 @@ class App extends Component {
 
           <Route exact path="/" component={Login} />
           <Route path="/login" component={Login} />
+          <Route path="/register" component={Registration} />
           <Route path="/employee" component={EmployeeView} />
         </div>
       </Router>
