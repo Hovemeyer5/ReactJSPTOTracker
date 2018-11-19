@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route} from "react-router-dom";
 
 import Header from './Header';
-import Login from './user_auth/Login';
-import Registration from './user_auth/Registration';
+import Login from './auth/Login';
+import Registration from './auth/Registration';
 import EmployeeView from './EmployeeView';
 
 
