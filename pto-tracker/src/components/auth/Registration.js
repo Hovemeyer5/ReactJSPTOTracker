@@ -2,18 +2,18 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 
 import Registrant from '../../models/Registrant';
-//import { register } from '../../reducers/actions';
+import { register } from '../../actions/auth';
 
 const mapDispatchToProps = dispatch => {
   return {
-    //register: (registration) => dispatch(register(registration))
+    register: (registrant) => dispatch(register(registrant))
   };
 };
 
 const mapStateToProps = state => {
   return { 
-    user: state.user,
-    registrationFailed: state.registrationFailed
+    registrationFailed: state.auth.registrationFailed,
+    registrationSucceeded: state.auth.registrationSucceeded
    };
 };
 
@@ -90,7 +90,7 @@ class Registration extends Component {
       return;
     }
     
-    //this.props.registration(this.state.registrant);
+    this.props.register(this.state.registrant);
   }
   registeredSuccessful(){
       return (
@@ -102,12 +102,12 @@ class Registration extends Component {
   } 
   registrationFailed(){
     if(this.props.registrationFailed){
-      return <p className="red">{this.props.registrationFailed}</p>;
+      return <p className="red">Sorry, Registration Failed!</p>;
     }
   }
   render() {
   
-    if (this.props.registered === true) {
+    if (this.props.registrationSucceeded === true) {
       return this.registeredSuccessful();
     }
 

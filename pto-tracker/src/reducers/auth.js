@@ -3,7 +3,9 @@ import { actions as authactions } from '../actions/auth';
 
 const defaultState = {
     user: null,
-    loginFailed: false
+    loginFailed: false,
+    registrationFailed: false,
+    registrationSucceeded: false
 };
 
 let user = window.localStorage.getItem('u');
@@ -22,6 +24,10 @@ const authReducer = function (state = defaultState, action) {
             return { ...state, user: null, loginFailed: false};
         case authactions.LOGIN_FAILED:
             return { ...state, loginFailed: true };
+        case authactions.REGISTRATION_FAILED:
+            return { ...state, registrationFailed: true};
+        case authactions.REGISTRATION_SUCCEEDED:
+            return { ...state, registrationSucceeded: true};
         default:
          return state;
     }
