@@ -5,7 +5,7 @@ require_once("random/random.php");
 class Registrant extends DBObject
 {
   
-    public $table = "users";
+    public $table = "registrant";
     public $props = array('id', 'first_name', 'last_name', 'email', 'password', 'is_admin', 'selector', 'validator');
 
     public $id;
@@ -118,12 +118,36 @@ class Registrant extends DBObject
     private function generateValidator(){
         return random_bytes(32);
     }
+    private function hashPassword(){
+        return hash("sha256", $this->password . DB_SALT);
+    }
+    private function addRegistrantToDb(){
+        $addToDB = parent::insert($this->table,
+            'null, '
+            . '"' . $this->first_name . '", '
+            . '"' . $this->last_name . '", '
+            .  $this->is_admin . ', '
+            . '"' . $this->selector . '" ,'
+            . '"' . $this->validator . '" ,'
+            . '"' . $this->email . '" ,'
+            . '"' . $this->hashPassword() . '"'
+        );
+        if(!$addToDB){
+            array_push($this->errors, new Error("Error: Could not save registrant to database."));
+        }
+        return $addToDB;
+    }
     public function register(){
         if(!$this->validateRegistrant()){
             return false;
         }
         $this->validator = $this->generateValidator();
         $this->selector = $this->generateSelector();
+
+        $addToDB = $this->addRegistrantToDb();
+        if(!$addToDB){
+            return false;
+        }
         return true;
     }
 
