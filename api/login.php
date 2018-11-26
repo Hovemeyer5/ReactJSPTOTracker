@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 
 ob_start();
 include('config.php');
-include('classes/user.php');
+require_once('classes/user.php');
 ob_end_clean();
 
 $request_body = file_get_contents('php://input');
