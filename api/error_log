@@ -1,0 +1,2 @@
+[26-Nov-2018 08:14:31] PHP Warning:  require_once(__DIR__../config.php) [<a href='function.require-once'>function.require-once</a>]: failed to open stream: No such file or directory in /home3/yahstcom/public_html/wt/ptotracker/api/classes/database.php on line 2
+[26-Nov-2018 08:14:31] PHP Fatal error:  require_once() [<a href='function.require'>function.require</a>]: Failed opening required '__DIR__../config.php' (include_path='.:/usr/lib64/php:/usr/share/pear') in /home3/yahstcom/public_html/wt/ptotracker/api/classes/database.php on line 2
