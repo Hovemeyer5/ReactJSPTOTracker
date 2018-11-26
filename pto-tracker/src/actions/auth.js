@@ -58,12 +58,12 @@ export function register(registrant){
             body: JSON.stringify(registrant)
         }).then(response =>{
             if(response.status === 200){
-                return response.json();
+                return response;
             }
             dispatch(registrationFailed());
             return {};
         }).then(data => {
-            dispatch(registrationSucceeded);
+            dispatch(registrationSucceeded());
         });
     }
 }
