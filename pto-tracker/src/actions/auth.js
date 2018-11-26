@@ -67,3 +67,25 @@ export function register(registrant){
         });
     }
 }
+
+export function verifyRegistration(selector, validator){
+    return function (dispatch) {
+        dispatch(apiRequest());
+        return fetch('http://yahst.com/wt/ptotracker/api/verify_registration.php', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({selector, validator})
+        }).then(response =>{
+            if(response.status === 200){
+                return response;
+            }
+            dispatch(registrationFailed());
+            return {};
+        }).then(data => {
+            dispatch(registrationSucceeded());
+        });
+    }
+}

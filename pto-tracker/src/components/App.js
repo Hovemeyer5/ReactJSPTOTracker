@@ -5,11 +5,10 @@ import Header from './Header';
 import Login from './auth/Login';
 import Registration from './auth/Registration';
 import EmployeeView from './EmployeeView';
-
+import VerifyRegistration from './auth/VerifyRegistration';
 
 class App extends Component {
  
-
   render() {
     return (
       <Router>
@@ -20,6 +19,7 @@ class App extends Component {
           <Route path="/login" component={Login} />
           <Route path="/register" component={Registration} />
           <Route path="/employee" component={EmployeeView} />
+          <Route path="/accountverification/:selector/:validator" component={VerifyRegistration} />
         </div>
       </Router>
     );
