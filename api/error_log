@@ -1,3 +1,8 @@
-[26-Nov-2018 09:23:08] PHP Fatal error:  Cannot redeclare class User in /home3/yahstcom/public_html/wt/ptotracker/api/classes/user.php on line 30
-[26-Nov-2018 09:32:10] PHP Fatal error:  Cannot redeclare class User in /home3/yahstcom/public_html/wt/ptotracker/api/classes/user.php on line 30
-[26-Nov-2018 09:32:55] PHP Catchable fatal error:  Object of class User could not be converted to string in /home3/yahstcom/public_html/wt/ptotracker/api/classes/registrant.php on line 23
+[26-Nov-2018 11:19:22] PHP Fatal error:  Cannot access empty property in /home3/yahstcom/public_html/wt/ptotracker/api/register.php on line 27
+[26-Nov-2018 11:19:32] PHP Fatal error:  Cannot access empty property in /home3/yahstcom/public_html/wt/ptotracker/api/register.php on line 27
+[26-Nov-2018 11:19:53] PHP Fatal error:  Cannot access empty property in /home3/yahstcom/public_html/wt/ptotracker/api/register.php on line 27
+[26-Nov-2018 11:19:55] PHP Fatal error:  Cannot access empty property in /home3/yahstcom/public_html/wt/ptotracker/api/register.php on line 27
+[26-Nov-2018 11:21:58] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home3/yahstcom/public_html/wt/ptotracker/api/classes/registrant.php:74) in /home3/yahstcom/public_html/wt/ptotracker/api/register.php on line 25
+[26-Nov-2018 11:22:41] PHP Parse error:  syntax error, unexpected '{' in /home3/yahstcom/public_html/wt/ptotracker/api/classes/registrant.php on line 73
+[26-Nov-2018 11:27:24] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home3/yahstcom/public_html/wt/ptotracker/api/classes/registrant.php:91) in /home3/yahstcom/public_html/wt/ptotracker/api/register.php on line 23
+[26-Nov-2018 11:34:54] PHP Fatal error:  Cannot use object of type Registrant as array in /home3/yahstcom/public_html/wt/ptotracker/api/classes/registrant.php on line 81

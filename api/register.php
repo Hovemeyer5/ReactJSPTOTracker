@@ -14,13 +14,13 @@ ob_end_clean();
 
 $request_body = file_get_contents('php://input');
 $registerData = json_decode(json_encode(json_decode($request_body)), true);
-
+$registered = false;
 if ( !empty($registerData)) {
-
     $registrant = new Registrant($registerData, new User());
-    print_r($registrant);
+    $registered = $registrant->register();
 } 
-
-header('X-PHP-Response-Code: 418', true, 418);
-
+if(!$registered){
+    header('X-PHP-Response-Code: 418', true, 418);
+    echo json_encode($registrant->errors);
+}
 ?>
