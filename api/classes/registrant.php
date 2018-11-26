@@ -70,9 +70,9 @@ class Registrant extends DBObject
     private function isRegistrantAlreadyAUser(){
         $isValid = false;
 
-        $this->userInstance->byUsername($this->email);
+        $this->userInstance->byEmail($this->email);
         if(strlen($this->userInstance->first_name) > 0) {
-            array_push($this->errors, new Error("Invalid Email: There already exists a user with that password."));
+            array_push($this->errors, new Error("Invalid Email: There already exists a user with that email."));
             $isValid = true;
         }
         return $isValid;

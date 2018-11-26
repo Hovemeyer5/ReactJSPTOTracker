@@ -19,7 +19,7 @@ if ( !empty($data)) {
     if ( isset( $data['username'] ) && isset( $data['password'] ) ) {
 
         $user = new User();
-        $user->byUsername($data['username']);
+        $user->byEmail($data['username']);
         
         $sentpasswordhash  = hash("sha256", $data['password'].DB_SALT);
     	if ($sentpasswordhash == $user->password) {
