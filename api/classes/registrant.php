@@ -1,6 +1,7 @@
 <?
 require_once("db_object.php");
 require_once("error.php");
+require_once("random/random.php");
 class Registrant extends DBObject
 {
   
@@ -111,10 +112,18 @@ class Registrant extends DBObject
         return $isValid;
     }
     
+    private function generateSelector(){
+        return bin2hex(random_bytes(8));
+    }
+    private function generateValidator(){
+        return random_bytes(32);
+    }
     public function register(){
         if(!$this->validateRegistrant()){
             return false;
         }
+        $this->validator = $this->generateValidator();
+        $this->selector = $this->generateSelector();
         return true;
     }
 
