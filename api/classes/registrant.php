@@ -137,6 +137,23 @@ class Registrant extends DBObject
         }
         return $addToDB;
     }
+    public function emailRegistrant() {
+        $headers = "MIME-Version: 1.0" . "\r\n";
+        $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+        $headers .= "From: webmaster@reactptotracker.io";
+        $subject = "Verify Your PTO Tracker Account";
+        $verificationUrl = "https://yahst.com/wt/ptotracker/accountverification/".$this->selector."/".$this->validator;
+
+        $message = "<p> Hi " . $this->first_name . " " . $this->last_name . ",</p>";
+        $message .= "<p> Welcome to the React Pto Tracker.</p>";
+        $message .= "<p>Here is your account verification link:</br>";
+        $message .= sprintf('<a href="%s">%s</a>', $verificationUrl, $verificationUrl);
+        $message .= "</p>";
+        $message .= "<p> I trust you will find this reply satisfactory,</p>";
+        $message .= "<p> The React PTO Tracker Person</p>";
+
+        mail($this->email, $subject, $message, $headers);
+    }
     public function register(){
         if(!$this->validateRegistrant()){
             return false;
@@ -148,6 +165,7 @@ class Registrant extends DBObject
         if(!$addToDB){
             return false;
         }
+        $this->emailRegistrant();
         return true;
     }
 
