@@ -96,16 +96,16 @@ class Registrant extends DBObject
         if($this->isRegistrantAlreadyAUser()){
             $isValid = false;
         }
-        if($this->isRequired("password", "'Password'")){
+        if(!$this->isRequired("password", "'Password'")){
             $isValid = false;
         }
-        if($this->isRequired("email", "'Email'")){
+        if(!$this->isRequired("email", "'Email'")){
             $isValid = false;
         }
-        if($this->isRequired("first_name", "'First Name'")){
+        if(!$this->isRequired("first_name", "'First Name'")){
             $isValid = false;
         }
-        if($this->isRequired("first_name", "'Last Name'")){
+        if(!$this->isRequired("first_name", "'Last Name'")){
             $isValid = false;
         }
         return $isValid;
