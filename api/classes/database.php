@@ -93,8 +93,10 @@ class Database
 
 			mysqli_query($this->conn, $q);
 
-			if (mysqli_error($this->conn) || mysqli_affected_rows($this->conn) == 0)
+			if (mysqli_error($this->conn) || mysqli_affected_rows($this->conn) == 0){
 				return false;
+			}
+				
 
 			return true;
 		}

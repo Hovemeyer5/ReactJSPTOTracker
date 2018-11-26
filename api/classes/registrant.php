@@ -32,6 +32,15 @@ class Registrant extends DBObject
         $this->password = $registerData['password'];
         $this->is_admin = $registerData['is_admin'];
     }
+    public function byEmail(){
+        $registrants = parent::select('*', 'email = "'.$this->email.'"');
+        if($registrants !== ""){
+            $registrants = $registrants[0];
+            parent::map($registrants);
+        } else {
+            parent::clearDbObject();
+        }
+    }
 
     private function isValidEmail(){
         $isValid = true;

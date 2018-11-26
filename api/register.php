@@ -16,6 +16,10 @@ $request_body = file_get_contents('php://input');
 $registerData = json_decode(json_encode(json_decode($request_body)), true);
 $registered = false;
 if ( !empty($registerData)) {
+    $deleteExistingRegistrant = new Registrant($registerData, new User());
+    $deleteExistingRegistrant->byEmail();
+    $deleteExistingRegistrant->delete();
+
     $registrant = new Registrant($registerData, new User());
     $registered = $registrant->register();
 } 
