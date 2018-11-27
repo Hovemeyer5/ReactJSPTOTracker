@@ -5,7 +5,8 @@ const defaultState = {
     user: null,
     loginFailed: false,
     registrationFailed: false,
-    registrationSucceeded: false
+    registrationSucceeded: false,
+    errors: []
 };
 
 let user = window.localStorage.getItem('u');
@@ -25,9 +26,11 @@ const authReducer = function (state = defaultState, action) {
         case authactions.LOGIN_FAILED:
             return { ...state, loginFailed: true };
         case authactions.REGISTRATION_FAILED:
-            return { ...state, registrationFailed: true};
+            return { ...state, registrationFailed: true, errors: action.errors, loading: false};
         case authactions.REGISTRATION_SUCCEEDED:
-            return { ...state, registrationSucceeded: true};
+            return { ...state, registrationSucceeded: true, loading: false};
+        case authactions.RESET_REGISTRATION_STATE:
+            return { ...state, registrationSucceeded: false, registrationFailed: false, loading: false, errors: []};
         default:
          return state;
     }

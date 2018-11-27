@@ -2,18 +2,20 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 
 import Registrant from '../../models/Registrant';
-import { register } from '../../actions/auth';
+import { register, resetRegistrationState } from '../../actions/auth';
 
 const mapDispatchToProps = dispatch => {
   return {
-    register: (registrant) => dispatch(register(registrant))
+    register: (registrant) => dispatch(register(registrant)),
+    resetRegistrationState: () => dispatch(resetRegistrationState())
   };
 };
 
 const mapStateToProps = state => {
   return { 
     registrationFailed: state.auth.registrationFailed,
-    registrationSucceeded: state.auth.registrationSucceeded
+    registrationSucceeded: state.auth.registrationSucceeded,
+    errors: state.auth.errors
    };
 };
 
@@ -29,6 +31,10 @@ class Registration extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handlePasswordCheckChange = this.handlePasswordCheckChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+  componentDidMount(){
+    this.props.resetRegistrationState();
+
   } 
   
   handlePasswordCheckChange(event){
@@ -102,7 +108,9 @@ class Registration extends Component {
   } 
   registrationFailed(){
     if(this.props.registrationFailed){
-      return <p className="red">Sorry, Registration Failed!</p>;
+      return this.props.errors.map((error, index) => (
+        <p key={index} className="red">{error.message}</p>
+      ));
     }
   }
   render() {
@@ -182,7 +190,7 @@ class Registration extends Component {
                 Register
             </button>
         </form>
-        <div className={'login-errors alert alert-danger ' + (this.props.loginFailed || this.state.errors.length > 0 ? '' : 'hide')}>
+        <div className={'login-errors alert alert-danger ' + (this.props.registrationFailed || this.state.errors.length > 0 ? '' : 'hide')}>
           {this.state.errors.map(error => (
             <p key={error.id} className="red">{error.message}</p>
           ))}

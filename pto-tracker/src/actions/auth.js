@@ -6,15 +6,17 @@ export const actions = {
     LOGOUT: 'LOGOUT',
     LOGIN_FAILED: 'LOGIN_FAILED',
     REGISTRATION_FAILED: 'REGISTRATION_FAILED',
-    REGISTRATION_SUCCEEDED: 'REGISTRATION_SUCCEEDED'
+    REGISTRATION_SUCCEEDED: 'REGISTRATION_SUCCEEDED',
+    RESET_REGISTRATION_STATE: 'RESET_REGISTRATION_STATE'
 };
 
 export const setUser = (user) => ({type: actions.SET_USER, user});
 export const logout = () => ({type: actions.LOGOUT});
 export const loginFailed = () => ({type: actions.LOGIN_FAILED});
 
-export const registrationFailed = () => ({type: actions.REGISTRATION_FAILED});
+export const registrationFailed = (errors) => ({type: actions.REGISTRATION_FAILED, errors});
 export const registrationSucceeded = () => ({type: actions.REGISTRATION_SUCCEEDED});
+export const resetRegistrationState = () => ({type: actions.RESET_REGISTRATION_STATE});
 
 export function login(username, password){
     return function (dispatch) {
@@ -58,12 +60,15 @@ export function register(registrant){
             body: JSON.stringify(registrant)
         }).then(response =>{
             if(response.status === 200){
-                return response;
+                dispatch(registrationSucceeded());
+                return [];
+            } 
+            
+            return response.json();
+        }).then(errors =>{
+            if(errors.length > 0){
+                dispatch(registrationFailed(errors));
             }
-            dispatch(registrationFailed());
-            return {};
-        }).then(data => {
-            dispatch(registrationSucceeded());
         });
     }
 }
