@@ -33,7 +33,26 @@ class Registrant extends DBObject
         $this->is_admin = $registerData['is_admin'];
     }
     public function byEmail(){
-        $registrants = parent::select('*', 'email = "'.$this->email.'"');
+        $registrants = "";
+
+        if($this->isValidEmail($email)){
+            $registrants = parent::select('*', 'email = "'.$this->email.'"');
+        } 
+        if($registrants !== ""){
+            $registrants = $registrants[0];
+            parent::map($registrants);
+        } else {
+            parent::clearDbObject();
+        }
+    }
+    public function bySelector($selector){
+        $registrants = "";
+        if(ctype_xdigit($selector)){
+            $registrants = parent::select('*', 'selector = "'.$selector.'"');
+        } else {
+            array_push($this->errors, new Error("Invalid Selector."));
+        }
+        
         if($registrants !== ""){
             $registrants = $registrants[0];
             parent::map($registrants);
@@ -125,7 +144,7 @@ class Registrant extends DBObject
         return bin2hex(random_bytes(8));
     }
     private function generateValidator(){
-        return random_bytes(32);
+        return bin2hex(random_bytes(32));
     }
     private function hashPassword(){
         return hash("sha256", $this->password . DB_SALT);
@@ -176,6 +195,22 @@ class Registrant extends DBObject
         }
         $this->emailRegistrant();
         return true;
+    }
+    public function createUser($validator){
+        if($this->validator == $validator){
+            $this->userInstance->fromRegistrant($this);
+            $userCreated = $this->userInstance->createUser();
+
+            if(!$userCreated){
+                array_push($this->errors, new Error("Unabled to add new user to db."));
+                return false;
+            }
+
+            return true;
+        } 
+
+        array_push($this->errors, new Error("Invalid Validation Token"));
+        return false;
     }
 
 }

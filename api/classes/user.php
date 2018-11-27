@@ -26,6 +26,26 @@ class User extends DBObject
             parent::clearDbObject();
         }
     }
+    public function fromRegistrant($registrant){
+        foreach($this->props as $prop){
+            $this->{$prop} = $registrant->{$prop};
+        }
+        $this->id = null;
+    }
+    public function createUser(){
+        $addToDB = parent::insert($this->table,
+            'null, '
+            . '"' . $this->first_name . '", '
+            . '"' . $this->last_name . '", '
+            . '"' . $this->email . '" ,'
+            . '"' . $this->password . '" ,'
+            .  $this->is_admin 
+        );
+        if(!$addToDB){
+            array_push($this->errors, new Error("Error: Could not save user to database."));
+        }
+        return $addToDB;
+    }
    
 }
 ?>

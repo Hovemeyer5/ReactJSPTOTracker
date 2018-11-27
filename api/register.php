@@ -1,7 +1,5 @@
 <?php
 
-session_start();
-
 if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     exit;
 }
@@ -16,12 +14,19 @@ $request_body = file_get_contents('php://input');
 $registerData = json_decode(json_encode(json_decode($request_body)), true);
 $registered = false;
 if ( !empty($registerData)) {
-    $deleteExistingRegistrant = new Registrant($registerData, new User());
-    $deleteExistingRegistrant->byEmail();
-    $deleteExistingRegistrant->delete();
-
     $registrant = new Registrant($registerData, new User());
-    $registered = $registrant->register();
+    $deleteExistingRegistrant = new Registrant($registerData, new User());
+
+    $deleteExistingRegistrant->byEmail();
+
+    if(count($deleteExistingRegistrant->errors) > 0 ){
+        foreach($deleteExistingRegistrant->errors as $error){
+             array_push($registrant->errors, $error);
+        }
+    } else {
+        $deleteExistingRegistrant->delete();
+        $registered = $registrant->register();
+    }
 } 
 if(!$registered){
     header('X-PHP-Response-Code: 418', true, 418);
