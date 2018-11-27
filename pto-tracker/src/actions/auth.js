@@ -40,7 +40,7 @@ export function login(username, password){
             dispatch(loginFailed());
             return {};
         }).then(user => {
-            if(user.username){
+            if(user.email){
                 const validUser = new User(user);
                 dispatch(setUser(validUser));
             }
