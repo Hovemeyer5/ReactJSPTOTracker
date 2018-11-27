@@ -1,1 +1,0 @@
-[26-Nov-2018 13:11:08] PHP Fatal error:  Call to undefined method User::byUsername() in /home3/yahstcom/public_html/wt/ptotracker/api/classes/registrant.php on line 73
