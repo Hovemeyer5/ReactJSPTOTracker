@@ -19,11 +19,7 @@ const mapStateToProps = state => {
 };
 
 class VerifyRegistration extends Component {
-
-  constructor(){
-    super();
-  } 
-
+  
   componentDidMount(){
       this.props.verifyRegistration(this.props.match.params.selector, this.props.match.params.validator);
   }

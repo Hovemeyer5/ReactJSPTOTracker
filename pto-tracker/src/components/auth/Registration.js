@@ -58,7 +58,7 @@ class Registration extends Component {
   }
   validateEmail(email) 
   {
-    return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
+    return /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email);
   }
   validatePassword(pw){
     // at least one number, one lowercase and one uppercase letter
