@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route} from "react-router-dom";
 import Header from './Header';
 import Login from './auth/Login';
 import Registration from './auth/Registration';
-import EmployeeView from './EmployeeView';
+import EmployeeView from './employee/EmployeeView';
 import VerifyRegistration from './auth/VerifyRegistration';
 
 class App extends Component {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import List from './List';
+import EntryList from './EntryList';
 
-class PtoEntries extends Component {
+class EntryContainer extends Component {
 
     render(){
         return (
@@ -11,10 +11,10 @@ class PtoEntries extends Component {
                         <h3>Pto Entries</h3>
                     </div>
                 </div>
-                <List/>
+                <EntryList entries={this.props.entries}/>
             </div>
         );
     }
 }
 
-export default PtoEntries;
+export default EntryContainer;

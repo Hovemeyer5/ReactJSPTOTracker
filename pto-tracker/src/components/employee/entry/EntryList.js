@@ -1,12 +1,7 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import EntryListHeader from './EntryListHeader'
 
-const mapStateToProps = state => {
-    return { 
-        entries: state.pto.entries
-     };
-};
-class List extends Component {
+class EntryList extends Component {
     getRowClasses(entry){
         const today = new Date().getTime();
         let classes = '';
@@ -25,29 +20,7 @@ class List extends Component {
         return (
             <div className="row">
                 <div className="col-md-12">
-                    <div className="row pto-entries-header">
-                        <div className="col-md-2">
-                            Start Date
-                        </div>
-                        <div className="col-md-2">
-                            End Date
-                        </div>
-                        <div className="col-md-2">
-                            Description
-                        </div>
-                        <div className="col-md-1">
-                            Used
-                        </div>
-                        <div className="col-md-1">
-                            Credit
-                        </div>
-                        <div className="col-md-2">
-                            Earned Balance
-                        </div>
-                        <div className="col-md-2">
-                            Projected Balance
-                        </div>
-                    </div>
+                    <EntryListHeader />
                     {this.props.entries.map(entry => (
                         <div className={"row pto-entries-row " + this.getRowClasses(entry)} key={entry.id}>
                             <div className="col-md-2">
@@ -60,7 +33,7 @@ class List extends Component {
                                 {entry.description}
                             </div>
                             <div className="col-md-1">
-                                {this.formatDecimal(entry.used)}
+                                {this.formatDecimal(entry.debit)}
                             </div>
                             <div className="col-md-1">
                                 {this.formatDecimal(entry.credit)}
@@ -79,4 +52,4 @@ class List extends Component {
     }
 };
 
-export default connect(mapStateToProps) (List);
+export default EntryList;

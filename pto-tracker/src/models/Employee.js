@@ -1,12 +1,26 @@
 import User from './User';
 
 let Employee = function (employee = {}) {
+
     User.call(this, employee);
     this.rollover = employee.rollover || 0;
     this.accrualRate = employee.accrualRate || 0;
     this.entries = employee.entries || [];
     this.requests = employee.requests || [];
 
+    this.calculateEntryBalances = calculateEntryBalances;
+    this.calculateEntryBalances();
+
+    function calculateEntryBalances(){
+        let earnedBalance = 0;
+        let projectedBalance = 0;
+        this.entries.forEach(entry => {
+            earnedBalance = entry.credit - entry.debit + earnedBalance;
+            projectedBalance = projectedBalance - entry.debit;
+            entry.earnedBalance = earnedBalance;
+            entry.projectedBalance = projectedBalance;
+        });
+    }
     this.getEarnedBalance = function(){
         if(this.entries.length === 0){
             return 0;

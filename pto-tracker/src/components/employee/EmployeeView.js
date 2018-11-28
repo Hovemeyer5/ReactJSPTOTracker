@@ -3,13 +3,11 @@ import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
 
-import PtoGeneralInfo from './PtoGeneralInfo';
-import PtoFormEntrySection from './PtoFormEntrySection';
-import PtoEntries from './PtoEntries';
+import PtoGeneralInfo from '../PtoGeneralInfo';
+import PtoFormEntrySection from '../PtoFormEntrySection';
+import EntryContainer from './entry/EntryContainer';
 
-import store from '../store/store';
-import { getEmployee } from '../actions/employee';
-import {fetchPtoEntries } from '../actions/ptoEntry';
+import { getEmployee } from '../../actions/employee';
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -25,10 +23,6 @@ const mapStateToProps = state => {
 
 class EmployeeView extends Component {
 
-  constructor(){
-    super();
-    store.dispatch(fetchPtoEntries());
-  }
   componentDidMount(){
     this.props.getEmployee(this.props.user.id);
   }
@@ -44,7 +38,7 @@ class EmployeeView extends Component {
 
             <PtoFormEntrySection />
 
-            <PtoEntries />
+            <EntryContainer entries={this.props.employee.entries}/>
         </div>
     );
   }
