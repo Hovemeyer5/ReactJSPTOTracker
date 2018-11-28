@@ -11,64 +11,75 @@ const mapStateToProps = state => {
 
 class PtoGeneralInfo extends Component {
    
-   getEarnedBalance(entries){
-    if(entries.length === 0){
-        return;
+    componentDidUpdate(){
+        console.log(this.props.employee);
     }
-    let today = new Date().getTime();
-    let lastEntryBeforeToday = entries[0];
-    entries.forEach(entry =>{
-         if(today > new Date(entry.endDate).getTime()){
-             lastEntryBeforeToday = entry;
-         }
-    });
-    return Math.round(lastEntryBeforeToday.earnedBalance*100)/100;
-   }
-   getProjectedBalance(entries){
-    if(entries.length === 0){
-        return;
-    }  
-    const lastEntry = entries[this.props.entries.length-1];
-    return Math.round(lastEntry.projectedBalance*100)/100;
-   }
-   render() {
-        const earnedBalance = this.getEarnedBalance(this.props.entries);
-        const projectedBalance = this.getProjectedBalance(this.props.entries);
-
-       return (
-           <div>
-                <div className="row">
-                    <div className="col-md-4">
-                        <label>Today: </label>
-                        {new Date().toLocaleDateString()}
-                    </div>
-                    <div className="col-md-4 middle">
-                        <label>2018 Rollover: </label>
-                        {this.props.rollover}
-                    </div>
-                    <div className="col-md-4 last">
-                        <label>Accrual Rate: </label>
-                        {Math.round(this.props.accrualRate*100)/100}
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-md-4">
-                        <label>Projected Accrual: </label>
-                        {this.props.accrualRate * 12}
-                    </div>
-                    <div className="col-md-4 middle">
-                        <label>Earned PTO: </label>
-                        {earnedBalance}
-                    </div>
-                    <div className="col-md-4 last">
-                        <label>Projected PTO: </label>
-                        {projectedBalance}
-                    </div>
-                </div>
-           </div>
+    getEarnedBalance(entries){
+        if(!entries || entries.length === 0){
+            return 0;
+        }
+        let earnedBalance = 0;
+        let today = new Date().getTime();
+        let lastEntryBeforeToday = 0;
+        lastEntryBeforeToday = entries
+        .findIndex(entry => today > new Date(entry.endDate).getTime());
+        if(lastEntryBeforeToday > 0){
+            let pastEntries = entries.slice(0, lastEntryBeforeToday);
+            earnedBalance = pastEntries.map(e => e.credit).reduce((t,c) => t+c);
+        }
+        return Math.round(earnedBalance*100)/100;
+    }
+    getProjectedBalance(employee){
+        const projectedAccrual = employee.accrualRate * 12;
+        let usedPTO = 0;
+        if(employee.entries.length > 0){
+            usedPTO = employee.entries.map(entry => entry.debit).reduce((total, entry) => {
+                total = total || 0;
+                return total + entry;
+            });
+        }
+        const projectBalance = projectedAccrual - usedPTO;
+        return Math.round(projectBalance*100)/100;
+    }
+    render() {
+            const employee = this.props.employee;
+            const earnedBalance = this.getEarnedBalance(employee.entries);
+            const projectedBalance = this.getProjectedBalance(employee);
         
-        ); 
-    }
+        return (
+            <div>
+                    <div className="row">
+                        <div className="col-md-4">
+                            <label>Today: </label>
+                            {new Date().toLocaleDateString()}
+                        </div>
+                        <div className="col-md-4 middle">
+                            <label>2018 Rollover: </label>
+                            {employee.rollover}
+                        </div>
+                        <div className="col-md-4 last">
+                            <label>Accrual Rate: </label>
+                            {employee.accrualRate}
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-md-4">
+                            <label>Projected Accrual: </label>
+                            {employee.accrualRate * 12}
+                        </div>
+                        <div className="col-md-4 middle">
+                            <label>Earned PTO: </label>
+                            {earnedBalance}
+                        </div>
+                        <div className="col-md-4 last">
+                            <label>Projected PTO: </label>
+                            {projectedBalance}
+                        </div>
+                    </div>
+            </div>
+            
+            ); 
+        }
 };
 
 export default connect(mapStateToProps) (PtoGeneralInfo);

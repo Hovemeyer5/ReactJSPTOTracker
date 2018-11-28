@@ -12,7 +12,7 @@ export const getEmployeeFailed = (errors) => ({type: actions.GET_EMPLOYEE_FAILED
 export function getEmployee(id){
     return function (dispatch) {
         dispatch(apiRequest());
-        return fetch('http://yahst.com/wt/ptotracker/api/employee.php', {
+        return fetch('http://yahst.com/wt/ptotracker/api/getEmployee.php', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -20,15 +20,17 @@ export function getEmployee(id){
             },
             body: JSON.stringify({id})
         }).then(response => {
-            debugger;
             if(response.status === 200){
-                let employee = new Employee(response.json());
-                dispatch(setEmployee(employee));
+                response.json().then(employeeData => {
+                    let employee = new Employee(employeeData);
+                    dispatch(setEmployee(employee));
+                });
             } else {
-                let errors = response.json();
-                dispatch(getEmployeeFailed(errors));
+                response.json().then(errors => {
+                    dispatch(getEmployeeFailed(errors));
+                });
             }
-            return response.json();
+            return {};
         });
     }
 }
