@@ -8,13 +8,13 @@ class Employee extends User
     public $entries;
     public $requests;
 
-    private $AccrualRate;
+    private $Accrual;
     private $Entry;
     private $Request;
 
-    public function __construct($accrualRateInstance = 1, $entryInstance = 2, $requestInstance = 3) {
+    public function __construct($accrualInstance = 1, $entryInstance = 2, $requestInstance = 3) {
         parent::__construct();
-        $this->AccrualRate = $accrualRateInstance;
+        $this->Accrual = $accrualRateInstance;
         $this->Entry = $entryInstance;
         $this->Request = $requestInstance;
         

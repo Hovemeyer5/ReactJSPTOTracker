@@ -6,12 +6,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 
 ob_start();
 require_once('classes/employee.php');
+require_once('classes/accrual.php');
 ob_end_clean();
 
 $request_body = file_get_contents('php://input');
 $userId = json_decode(json_encode(json_decode($request_body)), true);
 
-$mockEmployee = new Employee();
+$mockEmployee = new Employee(new Accrual());
 $mockEmployee->byId($userId['id']);
 $mockEmployee->rollover  = 38.82;
 $mockEmployee->accrualRate = 13.33;
