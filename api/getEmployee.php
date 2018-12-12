@@ -5,20 +5,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 }
 
 ob_start();
-//require_once('classes/employee.php');
+require_once('classes/employee.php');
 ob_end_clean();
 
 $request_body = file_get_contents('php://input');
 $userId = json_decode(json_encode(json_decode($request_body)), true);
 
-$mockEmployee;
-$mockEmployee['id'] = $userId['id'];
-$mockEmployee['first_name'] = "Becca";
-$mockEmployee['last_name'] = "Testing";
-$mockEmployee['email'] = "example@example.com";
-$mockEmployee['rollover']  = 38.82;
-$mockEmployee['accrualRate'] = 13.33;
-$mockEmployee['entries'] = array(
+$mockEmployee = new Employee();
+$mockEmployee->byId($userId['id']);
+$mockEmployee->rollover  = 38.82;
+$mockEmployee->accrualRate = 13.33;
+$mockEmployee->entries = array(
     array(  'id' => 1,
                 'startDate' => date('Y-m-d'),
                 'endDate' => date('Y-m-d'),
@@ -28,7 +25,7 @@ $mockEmployee['entries'] = array(
                 'user_id' => 4
             )
         );
-$mockEmployee['requests'] = array(
+$mockEmployee->requests = array(
     array(  'id' => 1,
                 'startDate' => date('Y-m-d'),
                 'endDate' => date('Y-m-d'),
@@ -37,7 +34,7 @@ $mockEmployee['requests'] = array(
                 'user_id' => 4
             )
         );
-echo json_encode($mockEmployee);
+echo $mockEmployee->toJson();
 /*
 if ( !empty($verificationData)) {
     $verifiedRegistrant = new Registrant($verificationData, new User());
