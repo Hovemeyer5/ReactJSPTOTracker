@@ -7,26 +7,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 ob_start();
 require_once('classes/employee.php');
 require_once('classes/accrual.php');
+require_once('classes/entry.php');
 ob_end_clean();
 
 $request_body = file_get_contents('php://input');
 $userId = json_decode(json_encode(json_decode($request_body)), true);
 
 $AccrualInstance = new Accrual();
-$mockEmployee = new Employee($AccrualInstance);
+$EntryInstance = new Entry();
+
+$mockEmployee = new Employee($AccrualInstance, $EntryInstance);
 $mockEmployee->byId($userId['id']);
 $mockEmployee->getPTODetailsByYear();
 $mockEmployee->rollover  = 38.82;
-$mockEmployee->entries = array(
-    array(  'id' => 1,
-                'startDate' => date('Y-m-d'),
-                'endDate' => date('Y-m-d'),
-                'description' => 'Mock Entry',
-                'debit' => 3,
-                'credit' => 0,
-                'user_id' => 4
-            )
-        );
 $mockEmployee->requests = array(
     array(  'id' => 1,
                 'startDate' => date('Y-m-d'),
