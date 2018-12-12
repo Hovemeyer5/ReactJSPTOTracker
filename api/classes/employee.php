@@ -14,7 +14,7 @@ class Employee extends User
 
     public function __construct($accrualInstance = 1, $entryInstance = 2, $requestInstance = 3) {
         parent::__construct();
-        $this->Accrual = $accrualRateInstance;
+        $this->Accrual = $accrualInstance;
         $this->Entry = $entryInstance;
         $this->Request = $requestInstance;
         
@@ -23,6 +23,7 @@ class Employee extends User
         foreach($this->props as $prop){
             $dbobject[$prop] = $this->{$prop};
         }
+
         $dbobject['rollover'] = $this->rollover;
         $dbobject['accrualRate'] = $this->accrualRate;
         $dbobject['entries'] = $this->entries;
@@ -31,18 +32,21 @@ class Employee extends User
         return json_encode($dbobject);
     }
     public function getPTODetailsByYear($year){
-        $year = $year || date("Y");
-        //get rollover by year
-
-        //get current accrual rate
-            //if $year = this year, get by date
-            // if $year != this year, get last accrual of year.
-        //if no accrual rate exists
-            // create default accrual rate.
+        $year = $year ? $year : date("Y");
+        $this->Accrual->getCurrentAccrual($this->id, $year);
         
-        //get entries
+        if($this->Accrual->id === NULL){
+            $this->Accrual->createYearInitialAccrual($this->id, $year);
+            //$this->Entry->createYearInitialPTOAccrual($this->id, $year);
+        }
+        
+        $this->accrualRate = $this->Accrual->accrual;
 
-        //get requests
+        //$this->entries = $this->Entry->getEntriesForYear($this->id, $year);
+
+        //$this->rollover = $this->Entry->getRolloverForYear($this->id, $year);
+
+        //$this->rquests = $this->Request->getRequestsForYear($this->id, $year);
     }
    
 }

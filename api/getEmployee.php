@@ -12,10 +12,11 @@ ob_end_clean();
 $request_body = file_get_contents('php://input');
 $userId = json_decode(json_encode(json_decode($request_body)), true);
 
-$mockEmployee = new Employee(new Accrual());
+$AccrualInstance = new Accrual();
+$mockEmployee = new Employee($AccrualInstance);
 $mockEmployee->byId($userId['id']);
+$mockEmployee->getPTODetailsByYear();
 $mockEmployee->rollover  = 38.82;
-$mockEmployee->accrualRate = 13.33;
 $mockEmployee->entries = array(
     array(  'id' => 1,
                 'startDate' => date('Y-m-d'),

@@ -40,7 +40,7 @@ class Database
 			$this->queryResult = mysqli_query($this->conn, $q);
 
 			if (!$this->queryResult)
-				return false;
+				return $results;
 
 			while($row = mysqli_fetch_array($this->queryResult))
 			{
@@ -58,7 +58,7 @@ class Database
 				$q .= " ($columns)";
 
 			$q .= " VALUES ($values)";
-
+			
 			mysqli_query($this->conn, $q);
 
 			if (mysqli_error($this->conn) || mysqli_affected_rows($this->conn) == 0)
