@@ -27,7 +27,7 @@ class Employee extends User
         $dbobject['rollover'] = $this->rollover;
         $dbobject['accrualRate'] = $this->accrualRate;
         $dbobject['entries'] = $this->Entry->mapEntriesWithPropsOnly($this->entries);
-        $dbobject['requests'] = $this-requests;
+        $dbobject['requests'] = $this->requests;
 
         return json_encode($dbobject);
     }
@@ -46,7 +46,7 @@ class Employee extends User
 
         //$this->rollover = $this->Entry->getRolloverForYear($this->id, $year);
 
-        //$this->rquests = $this->Request->getRequestsForYear($this->id, $year);
+        //$this->requests = $this->Request->getRequestsForYear($this->id, $year);
     }
    
 }
