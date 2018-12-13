@@ -10,7 +10,7 @@ class EntryListHeader extends Component {
                 <div className="col-md-2">
                     End Date
                 </div>
-                <div className="col-md-2">
+                <div className="col-md-4">
                     Description
                 </div>
                 <div className="col-md-1">
@@ -19,11 +19,11 @@ class EntryListHeader extends Component {
                 <div className="col-md-1">
                     Credit
                 </div>
-                <div className="col-md-2">
-                    Earned Balance
+                <div className="col-md-1">
+                    Earned
                 </div>
-                <div className="col-md-2">
-                    Projected Balance
+                <div className="col-md-1">
+                    Projected
                 </div>
             </div>
         );

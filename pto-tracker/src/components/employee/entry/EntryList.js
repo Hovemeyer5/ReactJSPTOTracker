@@ -17,6 +17,7 @@ class EntryList extends Component {
         return value ? Math.round(value*100)/100 : 0.00;
     }
     render() {
+        
         return (
             <div className="row">
                 <div className="col-md-12">
@@ -29,7 +30,7 @@ class EntryList extends Component {
                             <div className="col-md-2">
                                 {entry.endDate}
                             </div>
-                            <div className="col-md-2">
+                            <div className="col-md-4">
                                 {entry.description}
                             </div>
                             <div className="col-md-1">
@@ -38,10 +39,10 @@ class EntryList extends Component {
                             <div className="col-md-1">
                                 {this.formatDecimal(entry.credit)}
                             </div>
-                            <div className="col-md-2">
+                            <div className="col-md-1">
                                 {this.formatDecimal(entry.earnedBalance)}
                             </div>
-                            <div className="col-md-2">
+                            <div className="col-md-1">
                                 {this.formatDecimal(entry.projectedBalance)}
                             </div>
                         </div>
