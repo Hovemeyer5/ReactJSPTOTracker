@@ -39,14 +39,35 @@ class Entry extends DBObject
             $this->add();
         }
     }
+
+    public function getEntriesForYear($userId, $year){
+        $entries = parent::select('*', 'user_id = '.$userId. ' AND start_date BETWEEN "'.($year-1).'-12-31" AND "'.($year+1).'-01-01"');
+        if($entries !== ""){
+            return $entries;
+        } 
+        return array();
+    }
+
+    public function mapEntriesWithPropsOnly($entries){
+        $mappedEntries = array();
+        $mappedEntry;
+        foreach($entries as $entry){
+            foreach($this->props as $prop){
+                $mappedEntry[$prop] = $entry[$prop];
+            }
+            array_push($mappedEntries, $mappedEntry);
+        }
+        return $mappedEntries;
+    }
+
     public function add(){
         return parent::insert($this->table,
             'NULL, ' 
             . '"' . $this->start_date . '", '
             . '"' . $this->end_date . '", '
             . '"' . $this->description . '", '
-            . $this->credit . ', '
             . $this->debit . ', '
+            . $this->credit . ', '
             . $this->user_id
         );
     }

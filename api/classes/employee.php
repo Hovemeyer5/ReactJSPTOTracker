@@ -26,12 +26,12 @@ class Employee extends User
 
         $dbobject['rollover'] = $this->rollover;
         $dbobject['accrualRate'] = $this->accrualRate;
-        $dbobject['entries'] = $this->entries;
+        $dbobject['entries'] = $this->Entry->mapEntriesWithPropsOnly($this->entries);
         $dbobject['requests'] = $this-requests;
 
         return json_encode($dbobject);
     }
-    public function getPTODetailsByYear($year){
+    public function getPTODetailsByYear($year = null){
         $year = $year ? $year : date("Y");
         $this->Accrual->getCurrentAccrual($this->id, $year);
         
@@ -42,7 +42,7 @@ class Employee extends User
         
         $this->accrualRate = $this->Accrual->accrual;
 
-        //$this->entries = $this->Entry->getEntriesForYear($this->id, $year);
+        $this->entries = $this->Entry->getEntriesForYear($this->id, $year);
 
         //$this->rollover = $this->Entry->getRolloverForYear($this->id, $year);
 
