@@ -27,19 +27,28 @@ class Entry extends DBObject
     }
   
     public function createYearInitialPTOAccrual($userId, $year, $accrualRate){
-        echo "<br>UserId: ". $userId;
-        echo "<br>Year: ". $year;
-        echo "<br>Rate: ". $accrualRate;
-        /*
-        $accruals = parent::select('*', 'user_id = '.$userId. ' AND effective_date BETWEEN "'.$year.'-01-01" AND "'.$year.'-12-31"');
-        if($accruals !== ""){
-            return $accruals[0];
-        } 
-        return array();
-        */
+        $this->user_id = $userId;
+        $this->credit = $accrualRate;
+        $this->debit = 0;
+
+        for($i = 1; $i <=12; $i++){
+            $month = $i < 10 ? "0" . $i : $i;
+            $this->start_date = date("Y-m-t", strtotime($year. "-" . $month . "-01"));
+            $this->end_date = $this->start_date;
+            $this->description =  date("F", strtotime($year. "-" . $month . "-01")) . " Monthly Accrual";
+            $this->add();
+        }
     }
     public function add(){
-
+        return parent::insert($this->table,
+            'NULL, ' 
+            . '"' . $this->start_date . '", '
+            . '"' . $this->end_date . '", '
+            . '"' . $this->description . '", '
+            . $this->credit . ', '
+            . $this->debit . ', '
+            . $this->user_id
+        );
     }
 }
 ?>

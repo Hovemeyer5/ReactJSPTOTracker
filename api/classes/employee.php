@@ -37,7 +37,7 @@ class Employee extends User
         
         if($this->Accrual->id === NULL){
             $this->Accrual->createYearInitialAccrual($this->id, $year);
-            //$this->Entry->createYearInitialPTOAccrual($this->id, $year);
+            $this->Entry->createYearInitialPTOAccrual($this->id, $year, $this->Accrual->accrual);
         }
         
         $this->accrualRate = $this->Accrual->accrual;

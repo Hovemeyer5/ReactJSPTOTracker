@@ -15,7 +15,6 @@ $userId = json_decode(json_encode(json_decode($request_body)), true);
 
 $AccrualInstance = new Accrual();
 $EntryInstance = new Entry();
-
 $mockEmployee = new Employee($AccrualInstance, $EntryInstance);
 $mockEmployee->byId($userId['id']);
 $mockEmployee->getPTODetailsByYear();
